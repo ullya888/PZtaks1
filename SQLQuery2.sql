@@ -1,0 +1,29 @@
+
+CREATE TABLE Categories (
+    CategoryId INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Products (
+    ProductId INT IDENTITY(1,1) PRIMARY KEY,
+    CategoryId INT FOREIGN KEY REFERENCES Categories(CategoryId),
+    Name NVARCHAR(200) NOT NULL,
+    Price DECIMAL(18,2) NOT NULL 
+);
+
+
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Login NVARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(256) NOT NULL
+);
+
+CREATE TABLE CartItems (
+    CartItemId INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT FOREIGN KEY REFERENCES Users(UserId),
+    ProductId INT FOREIGN KEY REFERENCES Products(ProductId),
+    Quantity INT DEFAULT 1
+);
+
+
