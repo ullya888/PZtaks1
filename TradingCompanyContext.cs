@@ -28,7 +28,7 @@ public partial class TradingCompanyContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            // Залиште ТУТ свій рядок підключення, який у вас був до цього
+            
             optionsBuilder.UseSqlServer("Server=localhost;Database=TradingCompany;User Id=sa;Password=ranboopog;TrustServerCertificate=True;");
         }
     }
