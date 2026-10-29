@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using TradingCompany.DAL.Models;
+﻿
+using TradingCompany.DTO;
 
 namespace TradingCompany.DAL.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository : IBaseDtoRepository<ProductDto>
     {
-        void Create(Product item);
-        Product GetById(int id);
-        IEnumerable<Product> GetAll();
-        void Update(Product item);
-        void Delete(int id);
+   
     }
 }

@@ -1,49 +1,36 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿
 using TradingCompany.DAL.Interfaces;
 using TradingCompany.DAL.Models;
+using TradingCompany.DTO;
 
 namespace TradingCompany.DAL.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : BaseDtoRepository<Product, ProductDto>, IProductRepository
     {
-        private readonly TradingCompanyContext _context;
+        public ProductRepository(TradingCompanyContext context) : base(context) { }
 
-        public ProductRepository(TradingCompanyContext context)
+        protected override Product MapToEntity(ProductDto dto) => new Product
         {
-            _context = context;
-        }
+            Name = dto.Name,
+            Price = dto.Price,
+            CategoryId = dto.CategoryId
+        };
 
-        public void Create(Product item)
+        protected override ProductDto MapToDto(Product entity) => new ProductDto
         {
-            _context.Products.Add(item);
-            _context.SaveChanges();
-        }
+            ProductId = entity.ProductId,
+            Name = entity.Name,
+            Price = entity.Price,
+            CategoryId = entity.CategoryId
+        };
 
-        public Product GetById(int id)
-        {
-            return _context.Products.Find(id);
-        }
+        protected override Product? FindEntity(int id) => _context.Products.Find(id);
 
-        public IEnumerable<Product> GetAll()
+        protected override void UpdateEntityProperties(Product entity, ProductDto dto)
         {
-            return _context.Products.ToList();
-        }
-
-        public void Update(Product item)
-        {
-            _context.Products.Update(item);
-            _context.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var item = _context.Products.Find(id);
-            if (item != null)
-            {
-                _context.Products.Remove(item);
-                _context.SaveChanges();
-            }
+            entity.Name = dto.Name;
+            entity.Price = dto.Price;
+            entity.CategoryId = dto.CategoryId;
         }
     }
 }

@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using TradingCompany.DAL.Models;
+﻿
+using TradingCompany.DTO;
 
 namespace TradingCompany.DAL.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IBaseDtoRepository<CategoryDto>
     {
-        void Create(Category item);
-        Category GetById(int id);
-        IEnumerable<Category> GetAll();
-        void Update(Category item);
-        void Delete(int id);
     }
 }

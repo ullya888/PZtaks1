@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using TradingCompany.DAL.Models;
+﻿
+using TradingCompany.DTO;
 
 namespace TradingCompany.DAL.Interfaces
 {
-    public interface ICartItemRepository
+    public interface ICartItemRepository : IBaseDtoRepository<CartItemDto>
     {
-        void Create(CartItem item);
-        CartItem GetById(int id);
-        IEnumerable<CartItem> GetAll();
-        void Update(CartItem item);
-        void Delete(int id);
     }
 }

@@ -15,5 +15,5 @@ public partial class CartItem
 
     public virtual Product? Product { get; set; }
 
-    public virtual User? User { get; set; }
+   
 }

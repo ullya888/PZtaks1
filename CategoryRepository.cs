@@ -1,49 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿
 using TradingCompany.DAL.Interfaces;
 using TradingCompany.DAL.Models;
+using TradingCompany.DTO;
 
 namespace TradingCompany.DAL.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : BaseDtoRepository<Category, CategoryDto>, ICategoryRepository
     {
-        private readonly TradingCompanyContext _context;
+        public CategoryRepository(TradingCompanyContext context) : base(context) { }
 
-        public CategoryRepository(TradingCompanyContext context)
+        protected override Category MapToEntity(CategoryDto dto) => new Category
         {
-            _context = context;
-        }
+            Name = dto.Name
+        };
 
-        public void Create(Category item)
+        protected override CategoryDto MapToDto(Category entity) => new CategoryDto
         {
-            _context.Categories.Add(item);
-            _context.SaveChanges();
-        }
+            CategoryId = entity.CategoryId,
+            Name = entity.Name
+        };
 
-        public Category GetById(int id)
-        {
-            return _context.Categories.Find(id);
-        }
+        protected override Category? FindEntity(int id) => _context.Categories.Find(id);
 
-        public IEnumerable<Category> GetAll()
+        protected override void UpdateEntityProperties(Category entity, CategoryDto dto)
         {
-            return _context.Categories.ToList();
-        }
-
-        public void Update(Category item)
-        {
-            _context.Categories.Update(item);
-            _context.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var item = _context.Categories.Find(id);
-            if (item != null)
-            {
-                _context.Categories.Remove(item);
-                _context.SaveChanges();
-            }
+            entity.Name = dto.Name;
         }
     }
 }
